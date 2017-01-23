@@ -1,7 +1,8 @@
 package main
 
-import com.badlogic.gdx.Game
-import draw.{Looper, GdxProvider}
+import brols.MyInputProcessor
+import com.badlogic.gdx.{Game, Gdx}
+import draw.{GdxProvider, Looper}
 
 object Rome extends Game {
 
@@ -10,6 +11,7 @@ object Rome extends Game {
 
   override def create() = {
     setScreen(new Looper(new GdxProvider {}))
+    Gdx.input.setInputProcessor(new MyInputProcessor())
   }
 
 }
