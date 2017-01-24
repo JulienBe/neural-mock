@@ -1,4 +1,6 @@
-package events
+package systems.eventhub
+
+import systems.eventhub.events.Event
 
 /**
   * Created by julien on 23/01/17.

@@ -1,7 +1,7 @@
 package brols
 
 import com.badlogic.gdx.{Gdx, InputAdapter}
-import events.EventHub
+import systems.eventhub.EventHub
 
 /**
   * Created by julien on 23/01/17.

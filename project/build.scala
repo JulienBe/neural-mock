@@ -21,6 +21,8 @@ object Settings {
     scalaVersion := (scalaVersion in LocalProject("all-platforms")).value,
     libraryDependencies ++= Seq(
       "com.badlogicgames.gdx" % "gdx" % libgdxVersion.value,
+      "com.badlogicgames.gdx" % "gdx-box2d" % libgdxVersion.value,
+      "com.badlogicgames.box2dlights" % "box2dlights" % "1.4" % "compile",
       "org.scalamock" %% "scalamock-scalatest-support" % "3.2.2" % "test"
     ),
     javacOptions ++= Seq(
@@ -50,7 +52,8 @@ object Settings {
     libraryDependencies ++= Seq(
       "net.sf.proguard" % "proguard-base" % "4.11" % "provided",
       "com.badlogicgames.gdx" % "gdx-backend-lwjgl" % libgdxVersion.value,
-      "com.badlogicgames.gdx" % "gdx-platform" % libgdxVersion.value classifier "natives-desktop"
+      "com.badlogicgames.gdx" % "gdx-platform" % libgdxVersion.value classifier "natives-desktop",
+      "com.badlogicgames.gdx" % "gdx-box2d-platform" % libgdxVersion.value classifier "natives-desktop"
     ),
     fork in Compile := true,
     unmanagedResourceDirectories in Compile += file("android/assets"),
@@ -63,8 +66,15 @@ object Settings {
       "com.badlogicgames.gdx" % "gdx-backend-android" % libgdxVersion.value,
       "com.badlogicgames.gdx" % "gdx-platform" % libgdxVersion.value % "natives" classifier "natives-armeabi",
       "com.badlogicgames.gdx" % "gdx-platform" % libgdxVersion.value % "natives" classifier "natives-armeabi-v7a",
-      "com.badlogicgames.gdx" % "gdx-platform" % libgdxVersion.value % "natives" classifier "natives-x86"
-    ),
+      "com.badlogicgames.gdx" % "gdx-platform" % libgdxVersion.value % "natives" classifier "natives-x86",
+      // box2d
+      "com.badlogicgames.gdx" % "gdx-box2d" % libgdxVersion.value,
+      "com.badlogicgames.gdx" % "gdx-box2d-platform" % libgdxVersion.value % "natives" classifier "natives-armeabi",
+      "com.badlogicgames.gdx" % "gdx-box2d-platform" % libgdxVersion.value % "natives" classifier "natives-armeabi-v7a",
+      "com.badlogicgames.gdx" % "gdx-box2d-platform" % libgdxVersion.value % "natives" classifier "natives-arm64-v8a",
+      "com.badlogicgames.gdx" % "gdx-box2d-platform" % libgdxVersion.value % "natives" classifier "natives-x86",
+      "com.badlogicgames.gdx" % "gdx-box2d-platform" % libgdxVersion.value % "natives" classifier "natives-x86_64"
+  ),
     nativeExtractions <<= (baseDirectory) { base => Seq(
       ("natives-armeabi.jar", new ExactFilter("libgdx.so"), base / "libs" / "armeabi"),
       ("natives-armeabi-v7a.jar", new ExactFilter("libgdx.so"), base / "libs" / "armeabi-v7a"),

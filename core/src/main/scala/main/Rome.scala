@@ -2,7 +2,7 @@ package main
 
 import brols.MyInputProcessor
 import com.badlogic.gdx.{Game, Gdx}
-import draw.{GdxProvider, Looper}
+import draw.GdxProvider
 
 object Rome extends Game {
 
