@@ -18,7 +18,6 @@ class Looper(gdxProvider: GdxProvider) extends Screener(gdxProvider) with GdxPro
     if (playerShips.size == 0) {
       playerShips.+=(new PlayerShip)
     }
-    playerShips.foreach(_.inputs)
   }
 
   override def render(delta: Float) = {

@@ -12,7 +12,7 @@ object EventHub {
   def registerForInputs(eventListener: EventListener) = inputsListener.+=(eventListener)
 
   def mouseMoved(x: Int, y: Int) = tell(new TouchedEvent(x, y))
-  def justTouched(screenX: Int, i: Int) = tell(new JustTouchedEvent(x, y))
+  def justTouched(x: Int, y: Int) = tell(new JustTouchedEvent(x, y))
 
   def tell(obj: Any) = obj match {
     case touched: TouchedEvent => inputsListener.foreach(_.heyListen(touched))
