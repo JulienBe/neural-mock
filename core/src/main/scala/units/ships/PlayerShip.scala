@@ -13,7 +13,7 @@ class PlayerShip extends Ship with EventListener {
   EventHub.registerForInputs(this)
 
   override protected def createBody: Body =
-    Box2DHelper.createBody(Ship.bodyType, Ship.size.w, PlayerShip.category, PlayerShip.mask, this)
+    Box2DHelper.createCircle(Ship.bodyType, Ship.size.w, PlayerShip.category, PlayerShip.mask, this)
 
   override def heyListen(event: Event): Unit = {
     event match {

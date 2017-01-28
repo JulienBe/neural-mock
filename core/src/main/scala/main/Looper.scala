@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.GL20
 import draw.{GdxProvider, Screener}
 import systems.physic.{Box2DHelper, Physic}
 import units.ships.{Enemy, PlayerShip}
+import world.Wall
 
 import scala.collection.mutable
 
@@ -12,6 +13,8 @@ class Looper(gdxProvider: GdxProvider) extends Screener(gdxProvider) with GdxPro
 
   var playerShips: mutable.MutableList[PlayerShip] = mutable.MutableList()
   var enemyShips: mutable.MutableList[Enemy] = mutable.MutableList()
+
+  Wall.surround(1, 1, Rome.screenWidth - 1, Rome.screenHeight - 1)
 
   override def render(delta: Float) = {
     inputs

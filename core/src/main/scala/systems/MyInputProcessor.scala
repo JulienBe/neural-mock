@@ -1,4 +1,4 @@
-package brols
+package systems
 
 import com.badlogic.gdx.{Gdx, InputAdapter}
 import systems.eventhub.EventHub

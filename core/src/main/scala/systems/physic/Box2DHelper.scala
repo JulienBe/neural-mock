@@ -25,9 +25,14 @@ object Box2DHelper {
     debugRenderer.render(Physic.world, matrix4)
   }
 
-  def createBody(bodyType: BodyType, width: Float, category: Short, mask: Short, obj: Object): Body = {
+  def createCircle(bodyType: BodyType, width: Float, category: Short, mask: Short, obj: Object): Body = {
+    createBody(bodyType, createCircleShape(width), category, mask, obj)
+  }
+  def createRectangle(bodyType: BodyType, rectangle: Rectangle, category: Short, mask: Short, obj: Object) = {
+    createBody(bodyType, createRectangleShape(rectangle), category, mask, obj)
+  }
+  private def createBody(bodyType: BodyType, shape: Shape, category: Short, mask: Short, obj: Object) = {
     val b = Physic.world.createBody(createBodyDef(bodyType))
-    val shape: Shape = createShape(width)
     createFixture(b, shape, category: Short, mask: Short, obj)
     shape.dispose()
     b
@@ -45,21 +50,21 @@ object Box2DHelper {
     val fixture = b.createFixture(fixtureDef)
     fixture.setUserData(obj)
   }
-  private def createShape(width: Float): CircleShape = {
+  private def createCircleShape(width: Float): CircleShape = {
     val shape = new CircleShape()
     shape.setRadius(width)
     shape.setPosition(new Vector2(50, 50))
     shape
   }
 
-  def getRectangle(rectangle: Rectangle, ppt: Float): Shape = {
+  private def createRectangleShape(rectangle: Rectangle): Shape = {
     val polygon = new PolygonShape()
-    val center = new Vector2((rectangle.x + rectangle.width * 0.5f) / ppt, (rectangle.y + rectangle.height * 0.5f) / ppt)
-    polygon.setAsBox((rectangle.width * 0.5f) / ppt, (rectangle.height * 0.5f) / ppt, center, 0.0f)
+    val center = new Vector2(rectangle.x + rectangle.width * 0.5f, rectangle.y + rectangle.height * 0.5f)
+    polygon.setAsBox(rectangle.width * 0.5f, rectangle.height * 0.5f, center, 0.0f)
     polygon
   }
 
-  def getCircle(radius: Float, x: Float, y: Float, ppt: Float): Shape = {
+  private def getCircle(radius: Float, x: Float, y: Float, ppt: Float): Shape = {
     val circleShape = new CircleShape()
     circleShape.setRadius(radius / ppt)
     circleShape.setPosition(new Vector2((x + radius) / ppt, (y + radius) / ppt))

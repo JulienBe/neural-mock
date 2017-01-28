@@ -13,8 +13,12 @@ object Physic {
 
   val playerCategory: Short = 0x0001
   val otherCategory: Short = 0x0002
-  val playerMask: Short = otherCategory
-  val otherMask: Short = (otherCategory | playerCategory).toShort
+  val wallCategory: Short = 0x0004
+
+  val playerMask: Short = (otherCategory | wallCategory).toShort
+  val otherMask: Short = (otherCategory | playerCategory | wallCategory).toShort
+  val wallMask: Short = 0
+
   val bodiesToClean = new Array[Body]()
   val bodiesToDeactivate = new Array[Body]()
   val gravity = new Vector2(0, 1)

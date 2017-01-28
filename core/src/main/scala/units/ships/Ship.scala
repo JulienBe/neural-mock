@@ -14,7 +14,7 @@ class Ship extends EventListener {
 
   val body = createBody
 
-  protected def createBody = Box2DHelper.createBody(Ship.bodyType, Ship.size.w, Ship.category, Ship.mask, this)
+  protected def createBody = Box2DHelper.createCircle(Ship.bodyType, Ship.size.w, Ship.category, Ship.mask, this)
 
   EventHub.registerForCollisions(this)
 
@@ -31,7 +31,7 @@ class Ship extends EventListener {
 object Ship {
   def bodyType = BodyType.KinematicBody
 
-  val size = new Size(50, 50)
+  val size = new Size(10, 10)
   val category = Physic.otherCategory
   val mask = Physic.otherMask
 }

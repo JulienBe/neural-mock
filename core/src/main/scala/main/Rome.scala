@@ -1,9 +1,9 @@
 package main
 
-import brols.MyInputProcessor
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.{Game, Gdx}
 import draw.GdxProvider
+import systems.MyInputProcessor
 
 object Rome extends Game {
 
