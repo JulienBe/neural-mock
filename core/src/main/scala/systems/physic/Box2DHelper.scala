@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.{Matrix4, Rectangle, Vector2}
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType
 import com.badlogic.gdx.physics.box2d._
 import com.badlogic.gdx.utils.Array
+import main.Rome
 import units.ships.Ship
 
 /**
@@ -14,15 +15,20 @@ object Box2DHelper {
   private val vector2 = new Vector2()
   private val debugRenderer = new Box2DDebugRenderer()
 
+  private def toBoxUnits(f: Float) = f / Rome.ppm
+  private def fromBoxUnits(f: Float) = f * Rome.ppm
+
   def setPos(ship: Ship, x: Float, y: Float) = {
-    ship.body.setTransform(x, y, 0)
+    ship.body.setTransform(toBoxUnits(x), toBoxUnits(y), 0)
   }
 
-  def screenX(ship: Ship) = ship.body.getPosition.x
-  def screenY(ship: Ship) = ship.body.getPosition.y
+  def screenX(ship: Ship) = fromBoxUnits(ship.body.getPosition.x)
+  def screenY(ship: Ship) = fromBoxUnits(ship.body.getPosition.y)
 
   def debugRender(matrix4: Matrix4) = {
-    debugRenderer.render(Physic.world, matrix4)
+    val renderMatrix = new Matrix4(matrix4)
+    renderMatrix.scale(Rome.ppm, Rome.ppm, 1)
+    debugRenderer.render(Physic.world, renderMatrix)
   }
 
   def createCircle(bodyType: BodyType, width: Float, category: Short, mask: Short, obj: Object): Body = {
@@ -52,16 +58,16 @@ object Box2DHelper {
   }
   private def createCircleShape(width: Float): CircleShape = {
     val shape = new CircleShape()
-    shape.setRadius(width)
-    vector2.set(width / 2, width / 2)
+    shape.setRadius(toBoxUnits(width))
+    vector2.set(toBoxUnits(width / 2), toBoxUnits(width / 2))
     shape.setPosition(vector2)
     shape
   }
 
   private def createRectangleShape(rectangle: Rectangle): Shape = {
     val polygon = new PolygonShape()
-    val center = new Vector2(rectangle.x + rectangle.width * 0.5f, rectangle.y + rectangle.height * 0.5f)
-    polygon.setAsBox(rectangle.width * 0.5f, rectangle.height * 0.5f, center, 0.0f)
+    val center = new Vector2(toBoxUnits(rectangle.x + rectangle.width * 0.5f), toBoxUnits(rectangle.y + rectangle.height * 0.5f))
+    polygon.setAsBox((rectangle.width * 0.5f) / Rome.ppm, (rectangle.height * 0.5f) / Rome.ppm, center, 0.0f)
     polygon
   }
 

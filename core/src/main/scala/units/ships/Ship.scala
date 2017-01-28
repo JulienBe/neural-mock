@@ -19,7 +19,7 @@ class Ship extends EventListener {
   EventHub.registerForCollisions(this)
 
   def draw(batch: ShapeRenderer) = {
-    batch.circle(Box2DHelper.screenX(this) + Ship.size.hw, Box2DHelper.screenY(this) + Ship.size.hh, Ship.size.w)
+    batch.circle(Box2DHelper.screenX(this), Box2DHelper.screenY(this), Ship.size.w)
   }
 
   override def heyListen(event: Event) = event match {
@@ -29,7 +29,7 @@ class Ship extends EventListener {
 }
 
 object Ship {
-  def bodyType = BodyType.KinematicBody
+  def bodyType = BodyType.DynamicBody
 
   val size = new Size(10, 10)
   val category = Physic.otherCategory

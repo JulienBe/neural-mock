@@ -16,12 +16,12 @@ class Wall(val rectangle: Rectangle) {
 
 object Wall {
 
-  val category = Physic.wallCategory
-  val mask = Physic.wallMask
+  val category = Physic.otherCategory
+  val mask = Physic.otherMask
   val width = 2
   val bodyType = BodyType.StaticBody
 
-  def surround(x: Int, y: Int, width: Int, height: Int): Array[Wall] = {
+  def surround(x: Float, y: Float, width: Float, height: Float): Array[Wall] = {
     val bottom =  new Rectangle(x,              y - Wall.width, width,      Wall.width)
     val top =     new Rectangle(x,              height,         width,      Wall.width)
     val left =    new Rectangle(x - Wall.width, y,              Wall.width, height)
