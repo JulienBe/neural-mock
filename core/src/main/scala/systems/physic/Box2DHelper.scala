@@ -1,41 +1,54 @@
 package systems.physic
 
-import com.badlogic.gdx.math.{Rectangle, Vector2}
+import com.badlogic.gdx.math.{Matrix4, Rectangle, Vector2}
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType
 import com.badlogic.gdx.physics.box2d._
 import com.badlogic.gdx.utils.Array
+import units.ships.Ship
 
 /**
   * Created by julien on 24/01/17.
   */
 object Box2DHelper {
-  def createBody(bodyType: BodyType, damping: Float, width: Float, density: Float, friction: Float, restitution: Float, category: Short, mask: Short): Body = {
-    val b = Physic.world.createBody(createBodyDef(bodyType, damping))
+
+
+  private val debugRenderer = new Box2DDebugRenderer()
+
+  def setPos(ship: Ship, x: Float, y: Float) = {
+    ship.body.setTransform(x, y, 0)
+  }
+
+  def screenX(ship: Ship) = ship.body.getPosition.x
+  def screenY(ship: Ship) = ship.body.getPosition.y
+
+  def debugRender(matrix4: Matrix4) = {
+    debugRenderer.render(Physic.world, matrix4)
+  }
+
+  def createBody(bodyType: BodyType, width: Float, category: Short, mask: Short, obj: Object): Body = {
+    val b = Physic.world.createBody(createBodyDef(bodyType))
     val shape: Shape = createShape(width)
-    createFixture(b, shape, density: Float, friction: Float, restitution: Float, category: Short, mask: Short)
+    createFixture(b, shape, category: Short, mask: Short, obj)
     shape.dispose()
     b
   }
-  def createBodyDef(bodyType: BodyType, damping: Float): BodyDef = {
+  private def createBodyDef(bodyType: BodyType): BodyDef = {
     val bodyDef = new BodyDef()
     bodyDef.`type` = bodyType
-    bodyDef.linearDamping = damping
     bodyDef
   }
-  def createFixture(b: Body, shape: Shape, density: Float, friction: Float, restitution: Float, category: Short, mask: Short) = {
+  private def createFixture(b: Body, shape: Shape, category: Short, mask: Short, obj: Object) = {
     val fixtureDef = new FixtureDef()
     fixtureDef.shape = shape
-    fixtureDef.density = density
-    fixtureDef.friction = friction
-    fixtureDef.restitution = restitution
     fixtureDef.filter.categoryBits = category
     fixtureDef.filter.maskBits = mask
     val fixture = b.createFixture(fixtureDef)
-    fixture.setUserData(this)
+    fixture.setUserData(obj)
   }
-  def createShape(width: Float): CircleShape = {
+  private def createShape(width: Float): CircleShape = {
     val shape = new CircleShape()
     shape.setRadius(width)
+    shape.setPosition(new Vector2(50, 50))
     shape
   }
 

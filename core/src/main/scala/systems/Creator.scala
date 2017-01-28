@@ -9,6 +9,8 @@ object Creator {
 
   def float = Random.nextFloat
 
+  def degree = Random.nextFloat * 360
+
   def boolean = Random.nextBoolean
 
   def int(max: Int) = Random.nextInt(max)

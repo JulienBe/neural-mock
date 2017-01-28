@@ -6,8 +6,8 @@ import main.Rome
 object Main extends App {
     val cfg = new LwjglApplicationConfiguration
     cfg.title = "nn"
-    cfg.height = 480
-    cfg.width = 800
+    cfg.height = 800
+    cfg.width = 1280
     cfg.forceExit = false
     new LwjglApplication(Rome, cfg)
 }

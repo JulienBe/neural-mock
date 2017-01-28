@@ -1,6 +1,6 @@
 package systems.eventhub
 
-import systems.eventhub.events.{CollisionEvent, JustTouchedEvent, TouchedEvent}
+import systems.eventhub.events.{CollisionEvent, JustTouchedEvent, ShipCollisionEvent, TouchedEvent}
 
 import scala.collection.mutable
 
@@ -16,16 +16,15 @@ object EventHub {
   def registerForCollisions(eventListener: EventListener) = addListener(eventListener, collisionsListener)
   private def addListener(eventListener: EventListener, mutableList: mutable.MutableList[EventListener]) = mutableList.+=(eventListener)
 
-  def tell(obj: Any) = obj match {
+  private def tell(obj: Any) = obj match {
     case touched: TouchedEvent => inputsListener.foreach(_.heyListen(touched))
     case justTouched: JustTouchedEvent => inputsListener.foreach(_.heyListen(justTouched))
+    case shipCollision: ShipCollisionEvent => inputsListener.foreach(_.heyListen(shipCollision))
   }
 
   def mouseMoved(x: Int, y: Int) = tell(new TouchedEvent(x, y))
   def justTouched(x: Int, y: Int) = tell(new JustTouchedEvent(x, y))
 
-  def shipCollision(event: CollisionEvent) = {
-
-  }
+  def shipCollision(objA: Object, objB: Object) = tell(new ShipCollisionEvent(objA, objB))
 
 }

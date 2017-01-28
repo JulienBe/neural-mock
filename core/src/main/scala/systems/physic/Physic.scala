@@ -17,8 +17,9 @@ object Physic {
   val otherMask: Short = (otherCategory | playerCategory).toShort
   val bodiesToClean = new Array[Body]()
   val bodiesToDeactivate = new Array[Body]()
+  val gravity = new Vector2(0, 1)
 
-  val world = new World(Vector2.Zero, true)
+  val world = new World(gravity, true)
   world.setContactListener(new CollisionMaster)
   val rayHandler = new RayHandler(world)
   rayHandler.setAmbientLight(Color.DARK_GRAY)

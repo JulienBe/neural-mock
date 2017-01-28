@@ -1,29 +1,25 @@
 package units.ships
 
-import brols.Dimension
+import brols.Size
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
-import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType
 import systems.eventhub.events.Event
 import systems.eventhub.{EventHub, EventListener}
 import systems.physic.{Box2DHelper, Physic}
-import units.Collider
 
 /**
   * Created by julien on 23/01/17.
   */
-class Ship extends Collider with EventListener {
+class Ship extends EventListener {
 
-  val pos = new Vector2()
   val body = createBody
 
-  protected def createBody =
-    Box2DHelper.createBody(Ship.bodyType, Ship.damping, Ship.width, Ship.density, Ship.friction, Ship.restitution, Ship.category, Ship.mask)
+  protected def createBody = Box2DHelper.createBody(Ship.bodyType, Ship.size.w, Ship.category, Ship.mask, this)
 
   EventHub.registerForCollisions(this)
 
   def draw(batch: ShapeRenderer) = {
-    batch.rect(pos.x + Ship.dimension.halfWidth, pos.y - Ship.dimension.halfHeight, Ship.dimension.width, Ship.dimension.height)
+    batch.circle(Box2DHelper.screenX(this) + Ship.size.w, Box2DHelper.screenY(this) + Ship.size.h, Ship.size.w)
   }
 
   override def heyListen(event: Event) = event match {
@@ -33,16 +29,9 @@ class Ship extends Collider with EventListener {
 }
 
 object Ship {
-  def bodyType = BodyType.DynamicBody
+  def bodyType = BodyType.KinematicBody
 
-  val dimension = new Dimension(50, 50)
-  val speed = 0.5f
-  val damping = 5f
-  val friction = 4f
-  val density = 0.05f
-  val restitution = 0.6f
-  val width = .3f
-  val halfWidth = width / 2f
+  val size = new Size(50, 50)
   val category = Physic.otherCategory
   val mask = Physic.otherMask
 }

@@ -2,7 +2,6 @@ package systems.physic
 
 import com.badlogic.gdx.physics.box2d.{Contact, ContactImpulse, ContactListener, Manifold}
 import systems.eventhub.EventHub
-import systems.eventhub.events.CollisionEvent
 import units.ships.Ship
 
 /**
@@ -17,8 +16,9 @@ class CollisionMaster extends ContactListener {
     val dataA = c.getFixtureA.getUserData
     val dataB = c.getFixtureB.getUserData
 
-    if (dataA.isInstanceOf[Ship] && dataB.isInstanceOf[Ship])
-      EventHub.shipCollision(new CollisionEvent(dataA.asInstanceOf[Ship], dataB.asInstanceOf[Ship]))
+    if (dataA.isInstanceOf[Ship] && dataB.isInstanceOf[Ship]) {
+      EventHub.shipCollision(dataA, dataB)
+    }
   }
 
 }
