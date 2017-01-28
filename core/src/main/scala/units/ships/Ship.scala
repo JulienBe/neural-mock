@@ -3,6 +3,7 @@ package units.ships
 import brols.Size
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType
+import systems.Creator
 import systems.eventhub.events.Event
 import systems.eventhub.{EventHub, EventListener}
 import systems.physic.{Box2DHelper, Physic}
@@ -14,12 +15,12 @@ class Ship extends EventListener {
 
   val body = createBody
 
-  protected def createBody = Box2DHelper.createCircle(Ship.bodyType, Ship.size.w, Ship.category, Ship.mask, this)
+  protected def createBody = Box2DHelper.createCircle(Ship.bodyType, Ship.size.w, Ship.category, Ship.mask, this, Creator.vectorInScreen())
 
   EventHub.registerForCollisions(this)
 
   def draw(batch: ShapeRenderer) = {
-    batch.circle(Box2DHelper.screenX(this), Box2DHelper.screenY(this), Ship.size.w)
+    batch.circle(Box2DHelper.screenX(this) + Ship.size.hw, Box2DHelper.screenY(this) + Ship.size.hh, Ship.size.w)
   }
 
   override def heyListen(event: Event) = event match {

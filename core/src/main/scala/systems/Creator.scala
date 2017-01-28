@@ -1,11 +1,18 @@
 package systems
 
+import com.badlogic.gdx.math.Vector2
+import main.Rome
+
 import scala.util.Random
 
 /**
   * Created by julien on 10/07/16.
   */
 object Creator {
+
+  val vector2 = new Vector2()
+
+  def vectorInScreen() = vector2.set(floatInBounds(0, Rome.width), floatInBounds(0, Rome.height))
 
   def float = Random.nextFloat
 

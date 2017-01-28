@@ -3,6 +3,7 @@ package world
 import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType
 import com.badlogic.gdx.utils.Array
+import systems.Creator
 import systems.physic.{Box2DHelper, Physic}
 
 /**
@@ -11,7 +12,7 @@ import systems.physic.{Box2DHelper, Physic}
 class Wall(val rectangle: Rectangle) {
   val body = createBody
 
-  protected def createBody = Box2DHelper.createRectangle(Wall.bodyType, rectangle, Wall.category, Wall.mask, this)
+  protected def createBody = Box2DHelper.createRectangle(Wall.bodyType, rectangle, Wall.category, Wall.mask, this, Creator.vectorInScreen())
 }
 
 object Wall {

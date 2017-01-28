@@ -15,8 +15,8 @@ object Box2DHelper {
   private val vector2 = new Vector2()
   private val debugRenderer = new Box2DDebugRenderer()
 
-  private def toBoxUnits(f: Float) = f / Rome.ppm
-  private def fromBoxUnits(f: Float) = f * Rome.ppm
+  def toBoxUnits(f: Float) = f / Rome.ppm
+  def fromBoxUnits(f: Float) = f * Rome.ppm
 
   def setPos(ship: Ship, x: Float, y: Float) = {
     ship.body.setTransform(toBoxUnits(x), toBoxUnits(y), 0)
@@ -31,21 +31,24 @@ object Box2DHelper {
     debugRenderer.render(Physic.world, renderMatrix)
   }
 
-  def createCircle(bodyType: BodyType, width: Float, category: Short, mask: Short, obj: Object): Body = {
-    createBody(bodyType, createCircleShape(width), category, mask, obj)
+  def createCircle(bodyType: BodyType, width: Float, category: Short, mask: Short, obj: Object, position: Vector2): Body = {
+    createBody(bodyType, createCircleShape(width), category, mask, obj, position)
   }
-  def createRectangle(bodyType: BodyType, rectangle: Rectangle, category: Short, mask: Short, obj: Object) = {
-    createBody(bodyType, createRectangleShape(rectangle), category, mask, obj)
+  def createRectangle(bodyType: BodyType, rectangle: Rectangle, category: Short, mask: Short, obj: Object, position: Vector2) = {
+    createBody(bodyType, createRectangleShape(rectangle), category, mask, obj, position)
   }
-  private def createBody(bodyType: BodyType, shape: Shape, category: Short, mask: Short, obj: Object) = {
-    val b = Physic.world.createBody(createBodyDef(bodyType))
+  private def createBody(bodyType: BodyType, shape: Shape, category: Short, mask: Short, obj: Object, position: Vector2) = {
+    val b = Physic.world.createBody(createBodyDef(bodyType, position))
     createFixture(b, shape, category: Short, mask: Short, obj)
     shape.dispose()
     b
   }
-  private def createBodyDef(bodyType: BodyType): BodyDef = {
+  private def createBodyDef(bodyType: BodyType, postion: Vector2): BodyDef = {
     val bodyDef = new BodyDef()
     bodyDef.`type` = bodyType
+    postion.scl(toBoxUnits(1))
+    if (bodyType == BodyType.DynamicBody)
+      bodyDef.position.set(postion)
     bodyDef
   }
   private def createFixture(b: Body, shape: Shape, category: Short, mask: Short, obj: Object) = {

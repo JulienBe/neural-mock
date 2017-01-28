@@ -2,6 +2,7 @@ package units.ships
 
 import com.badlogic.gdx.physics.box2d.Body
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType
+import systems.Creator
 import systems.eventhub._
 import systems.eventhub.events.{Event, JustTouchedEvent, TouchedEvent}
 import systems.physic.{Box2DHelper, Physic}
@@ -14,7 +15,7 @@ class PlayerShip extends Ship with EventListener {
   EventHub.registerForInputs(this)
 
   override protected def createBody: Body =
-    Box2DHelper.createCircle(PlayerShip.bodyType, Ship.size.w, PlayerShip.category, PlayerShip.mask, this)
+    Box2DHelper.createCircle(PlayerShip.bodyType, Ship.size.w, PlayerShip.category, PlayerShip.mask, this, Creator.vectorInScreen())
 
   override def heyListen(event: Event): Unit = {
     event match {
