@@ -16,6 +16,7 @@ class CollisionMaster extends ContactListener {
     val dataA = c.getFixtureA.getUserData
     val dataB = c.getFixtureB.getUserData
 
+    println(dataA + " : " + dataB)
     if (dataA.isInstanceOf[Ship] && dataB.isInstanceOf[Ship]) {
       EventHub.shipCollision(dataA, dataB)
     }

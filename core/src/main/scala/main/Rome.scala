@@ -7,18 +7,25 @@ import systems.MyInputProcessor
 
 object Rome extends Game {
 
-  val screenWidth = 1280
-  val screenHeight = 800
-  val screenHalfWidth = screenWidth / 2
-  val screenHalfHeight = screenHeight / 2
-  val screenCenter = new Vector2(screenHalfWidth, screenHalfHeight)
+  val ppm = 80
   var time = 0f
+  var width = 0f
+  var height = 0f
+  var halfHwidth = 0f
+  var halfHeight = 0f
+  val screenCenter = new Vector2(halfHwidth, halfHeight)
+
+  def updateScreenSizes() = {
+    width = Gdx.graphics.getWidth
+    height = Gdx.graphics.getHeight
+    halfHwidth = width / 2
+    halfHeight = height / 2
+    screenCenter.set(halfHwidth, halfHeight)
+  }
 
   override def create() = {
     setScreen(new Looper(new GdxProvider {}))
     Gdx.input.setInputProcessor(new MyInputProcessor())
   }
 
-  def widthRatio() = Gdx.graphics.getWidth / Rome.screenWidth
-  def heightRatio() = Gdx.graphics.getHeight / Rome.screenHeight
 }

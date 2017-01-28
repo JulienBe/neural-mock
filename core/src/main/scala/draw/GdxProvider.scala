@@ -10,7 +10,8 @@ import main.Rome
   */
 trait GdxProvider {
   def getCamera() = {
-    val cam = new OrthographicCamera(Rome.screenWidth, Rome.screenHeight)
+    Rome.updateScreenSizes()
+    val cam = new OrthographicCamera(Rome.width, Rome.height)
     cam.position.set(cam.viewportWidth / 2f, cam.viewportHeight / 2f, 0)
     cam
   }

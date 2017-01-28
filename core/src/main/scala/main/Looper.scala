@@ -14,7 +14,7 @@ class Looper(gdxProvider: GdxProvider) extends Screener(gdxProvider) with GdxPro
   var playerShips: mutable.MutableList[PlayerShip] = mutable.MutableList()
   var enemyShips: mutable.MutableList[Enemy] = mutable.MutableList()
 
-  Wall.surround(1, 1, Rome.screenWidth - 1, Rome.screenHeight - 1)
+  Wall.surround(1f, 1f, Rome.width - 1f, Rome.height - 1f)
 
   override def render(delta: Float) = {
     inputs
@@ -26,7 +26,7 @@ class Looper(gdxProvider: GdxProvider) extends Screener(gdxProvider) with GdxPro
   def inputs() = {
     if (playerShips.size == 0)
       playerShips.+=(new PlayerShip)
-    if (enemyShips.size == 0)
+    if (enemyShips.size <= 15)
       enemyShips.+=(Enemy.get())
   }
 

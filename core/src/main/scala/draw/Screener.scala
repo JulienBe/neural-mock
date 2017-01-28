@@ -1,6 +1,7 @@
 package draw
 
 import com.badlogic.gdx.Screen
+import main.Rome
 
 /**
   * Created by julein on 10/07/16.
@@ -17,8 +18,8 @@ abstract class Screener(gdxProvider: GdxProvider) extends Screen with GdxProvide
 
   override def pause() = {}
   override def dispose() = {}
-  override def resize(width: Int, height: Int) = {}
+  override def resize(width: Int, height: Int) = Rome.updateScreenSizes()
   override def hide() = {}
-  override def show() = {}
+  override def show() = Rome.updateScreenSizes()
   override def resume() = {}
 }
