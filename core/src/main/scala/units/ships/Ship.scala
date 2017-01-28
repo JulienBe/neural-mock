@@ -19,7 +19,7 @@ class Ship extends EventListener {
   EventHub.registerForCollisions(this)
 
   def draw(batch: ShapeRenderer) = {
-    batch.circle(Box2DHelper.screenX(this) + Ship.size.w, Box2DHelper.screenY(this) + Ship.size.h, Ship.size.w)
+    batch.circle(Box2DHelper.screenX(this) + Ship.size.hw, Box2DHelper.screenY(this) + Ship.size.hh, Ship.size.w)
   }
 
   override def heyListen(event: Event) = event match {

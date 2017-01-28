@@ -11,7 +11,7 @@ import units.ships.Ship
   */
 object Box2DHelper {
 
-
+  private val vector2 = new Vector2()
   private val debugRenderer = new Box2DDebugRenderer()
 
   def setPos(ship: Ship, x: Float, y: Float) = {
@@ -53,7 +53,8 @@ object Box2DHelper {
   private def createCircleShape(width: Float): CircleShape = {
     val shape = new CircleShape()
     shape.setRadius(width)
-    shape.setPosition(new Vector2(50, 50))
+    vector2.set(width / 2, width / 2)
+    shape.setPosition(vector2)
     shape
   }
 

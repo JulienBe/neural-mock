@@ -17,8 +17,8 @@ class PlayerShip extends Ship with EventListener {
 
   override def heyListen(event: Event): Unit = {
     event match {
-      case touched: TouchedEvent => Box2DHelper.setPos(this, touched.x, touched.y); return
-      case justTouched: JustTouchedEvent => Box2DHelper.setPos(this, justTouched.x, justTouched.y); return
+      case touched: TouchedEvent => Box2DHelper.setPos(this, touched.x - Ship.size.hw, touched.y - Ship.size.hh); return
+      case justTouched: JustTouchedEvent => Box2DHelper.setPos(this, justTouched.x - Ship.size.hw, justTouched.y - Ship.size.hh); return
       case _ => println(this + " couldn't handle " + event)
     }
     super.heyListen(event)
