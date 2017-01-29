@@ -17,36 +17,25 @@ object Physic {
   val playerMask: Short = otherCategory
   val otherMask: Short = (otherCategory | playerCategory).toShort
 
-  val bodiesToClean = new Array[Body]()
-  val bodiesToDeactivate = new Array[Body]()
-  val gravity = new Vector2(0, -9.81f)
+  private val bodiesToClean = new Array[Body]()
+  private val bodiesToDeactivate = new Array[Body]()
+  private val gravity = new Vector2(0, -9.81f)
 
   val world = new World(gravity, true)
   world.setContactListener(new CollisionMaster)
-  val rayHandler = new RayHandler(world)
+
+  private val rayHandler = new RayHandler(world)
   rayHandler.setAmbientLight(Color.DARK_GRAY)
 
-  val timestep = 1/60f
-  val velocityIteration = 6
-  val positionIteration = 2
+  private val timestep = 1/60f
+  private val velocityIteration = 6
+  private val positionIteration = 2
 
-  var accumulator = 0f
+  private var accumulator = 0f
 
   def render(delta: Float, cam: OrthographicCamera) = {
     rayHandler.setCombinedMatrix(cam)
     rayHandler.updateAndRender()
-  }
-
-  def doForAllBodies(bodyToUnit: (Body) => Unit, bodies: Array[Body]) = {
-    for (i <- 0 until bodies.size)
-      bodyToUnit(bodies.get(i))
-    bodies.clear()
-  }
-
-  def sleepAllBodies(bodies: Array[Body]) = {
-    for (i <- 0 until bodies.size)
-      bodies.get(i).setActive(false)
-    bodies.clear()
   }
 
   def doPhysicsStep(deltaTime: Float) {
@@ -67,4 +56,15 @@ object Physic {
   def bodyToClean(body: Body) = bodiesToClean.add(body)
   def bodyToSleep(body: Body) = bodiesToDeactivate.add(body)
 
+  private def doForAllBodies(methodToBodies: (Body) => Unit, bodies: Array[Body]) = {
+    for (i <- 0 until bodies.size)
+      methodToBodies(bodies.get(i))
+    bodies.clear()
+  }
+
+  private def sleepAllBodies(bodies: Array[Body]) = {
+    for (i <- 0 until bodies.size)
+      bodies.get(i).setActive(false)
+    bodies.clear()
+  }
 }
